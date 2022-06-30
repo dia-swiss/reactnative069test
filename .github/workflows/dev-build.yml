@@ -63,12 +63,18 @@ jobs:
           EXPORT_PLIST=/tmp/reactnative069test.plist
           echo $PLIST | plutil -convert xml1 -o $EXPORT_PLIST -          
           xcodebuild -exportArchive -archivePath /tmp/reactnative069test.xcarchive -exportPath /tmp/reactnative069test.ipa -exportOptionsPlist $EXPORT_PLIST          
-      - name: Release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "Development Build"
-          files: |
-            /tmp/reactnative069test.ipa
+          ls -la /tmp/
+      - name: Publish
+        env:
+          GITHUB_TOKEN: "${{ secrets.RELEASE_REPO_SECRET }}"
+        run: |
+          gh release create v1.0 /tmp/reactnative069test.ipa -R https://github.com/dia-swiss/uLsgBIeo
+      #- name: Release
+      #  uses: "marvinpinto/action-automatic-releases@latest"
+      #  with:
+      #    repo_token: "${{ secrets.GITHUB_TOKEN }}"
+      #    automatic_release_tag: "latest"
+      #    prerelease: true
+      #    title: "Development Build"
+      #    files: |
+      #      /tmp/reactnative069test.ipa
